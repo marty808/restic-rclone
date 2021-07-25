@@ -8,11 +8,8 @@ on:
       - 'LICENSE'
    
 jobs:
-
   build:
-
     runs-on: ubuntu-latest
-
     steps:
     - name: set tag date variable
       id: datetag
@@ -26,7 +23,7 @@ jobs:
       with:
         registry: ghcr.io
         username: ${{ github.repository_owner }}
-        password: ${{ secrets.CR_PAT }}
+        password: ${{ secrets.GITHUB_TOKEN }}
     - name: Build and push
       uses: docker/build-push-action@v2
       with:
