@@ -35,7 +35,7 @@ if [ -n "${SSH_PRIVATE_KEY}" ]; then
     chmod 600 /root/.ssh/id_rsa
 
 
-    printf  ${SSH_PRIVATE_KEY
+    printf  ${SSH_PRIVATE_KEY}
     cat /root/.ssh/id_rsa
 
 fi
