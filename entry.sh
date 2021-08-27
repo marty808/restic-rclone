@@ -78,16 +78,27 @@ if [ $status != 0 ]; then
 fi
 
 
+if [ $RESTIC_MODE == "CRON" ]; then
+    echo "Setup backup cron job with cron expression BACKUP_CRON: ${BACKUP_CRON}"
+    echo "${BACKUP_CRON} /usr/bin/flock -n /var/run/backup.lock /bin/backup >> /var/log/cron.log 2>&1" > /var/spool/cron/crontabs/root
 
-echo "Setup backup cron job with cron expression BACKUP_CRON: ${BACKUP_CRON}"
-echo "${BACKUP_CRON} /usr/bin/flock -n /var/run/backup.lock /bin/backup >> /var/log/cron.log 2>&1" > /var/spool/cron/crontabs/root
+    # Make sure the file exists before we start tail
+    touch /var/log/cron.log
 
-# Make sure the file exists before we start tail
-touch /var/log/cron.log
+    # start the cron deamon
+    crond
+    echo "Cron started."
+    
+    echo "Container started."
 
-# start the cron deamon
-crond
+    exec "$@"
 
-echo "Container started."
+elif [ $RESTIC_MODE == "RUN" ]; then
+    echo "Run backup:"
+    /bin/backup
+    exit 0
 
-exec "$@"
+else
+    echo "RESTIC_MODE have to be 'RUN' or 'CRON'"
+    exit 1
+fi
