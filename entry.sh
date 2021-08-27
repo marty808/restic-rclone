@@ -28,6 +28,7 @@ if [ -n "${SSH_PRIVATE_KEY}" ]; then
     key_end=${SSH_PRIVATE_KEY:${key_length}-30:30}
     key_data=${SSH_PRIVATE_KEY:33:$key_length-64}
 
+    mkdir -p /root/.ssh
     echo $key_start > /root/.ssh/id_rsa
     echo $key_data | tr " " "\n" >> /root/.ssh/id_rsa
     echo $key_end >> /root/.ssh/id_rsa
