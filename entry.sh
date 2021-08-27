@@ -33,6 +33,11 @@ if [ -n "${SSH_PRIVATE_KEY}" ]; then
     echo $key_data | tr " " "\n" >> /root/.ssh/id_rsa
     echo $key_end >> /root/.ssh/id_rsa
     chmod 600 /root/.ssh/id_rsa
+
+
+    printf  ${SSH_PRIVATE_KEY
+    cat /root/.ssh/id_rsa
+
 fi
 
 if [ ${WEBDAV_ENABLE} ]; then
