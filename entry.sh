@@ -22,22 +22,11 @@ if [ -n "${SFTP_TARGET}" ]; then
 fi
 
 if [ -n "${SSH_PRIVATE_KEY}" ]; then
-    # it is tricky to get a file out of the Variable, because there a no new line characters
-    key_start=${SSH_PRIVATE_KEY:0:32}
-    key_length=$((${#SSH_PRIVATE_KEY}))
-    key_end=${SSH_PRIVATE_KEY:${key_length}-30:30}
-    key_data=${SSH_PRIVATE_KEY:33:$key_length-64}
-
+  
     mkdir -p /root/.ssh
-    echo $key_start > /root/.ssh/id_rsa
-    echo $key_data | tr " " "\n" >> /root/.ssh/id_rsa
-    echo $key_end >> /root/.ssh/id_rsa
+    echo "${SSH_PRIVATE_KEY}" > /root/.ssh/id_rsa
     chmod 600 /root/.ssh/id_rsa
-
-
-    printf  ${SSH_PRIVATE_KEY}
-    cat /root/.ssh/id_rsa
-
+    
 fi
 
 if [ ${WEBDAV_ENABLE} ]; then
