@@ -10,6 +10,7 @@ RUN unzip rclone-current-linux-amd64.zip && mv rclone-*-linux-amd64/rclone /bin/
 FROM restic/restic:0.12.1
 
 COPY --from=rclone /usr/bin/tail /usr/bin/gnu_tail
+COPY --from=rclone /lib/lib*.so.1 /usr/bin/
 COPY --from=rclone /bin/rclone /bin/rclone
 
 RUN mkdir -p /mnt/restic /var/spool/cron/crontabs /var/log && touch /var/log/cron.log
