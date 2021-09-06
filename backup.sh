@@ -8,7 +8,7 @@ copyErrorLog() {
 }
 
 logLast() {
-  echo "$1" >> ${lastLogfile}
+  echo "$1" | tee -a ${lastLogfile}
 }
 
 if [ -f "/hooks/pre-backup.sh" ]; then
