@@ -1,7 +1,7 @@
 FROM alpine:latest as rclone
 
 # add coreutils
-apk add coreutils
+RUN apk add coreutils
 
 # Get rclone executable
 ADD https://downloads.rclone.org/rclone-current-linux-amd64.zip /
