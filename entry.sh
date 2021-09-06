@@ -14,6 +14,7 @@ if [ $RESTIC_PROTOCOL == "sftp" ]; then
     SFTP_TARGET=$(echo $RESTIC_REPOSITORY | cut -d':' -f2 | cut -d'@' -f2)
 fi
 
+# add remote SSH key
 if [ -n "${SFTP_TARGET}" ]; then
     # Authorize SSH Host
     mkdir -p /root/.ssh
@@ -21,12 +22,12 @@ if [ -n "${SFTP_TARGET}" ]; then
     ssh-keyscan ${SFTP_TARGET} >> /root/.ssh/known_hosts
 fi
 
-if [ -n "${SSH_PRIVATE_KEY}" ]; then
-  
-    mkdir -p /root/.ssh
-    echo "${SSH_PRIVATE_KEY}" > /root/.ssh/id_rsa
+# check for SSH key
+if [ -e  /root/.ssh/id_rsa ]; then
     chmod 600 /root/.ssh/id_rsa
-    
+else
+    echo "SSH Key not mounted... exiting"
+    exit 2
 fi
 
 if [ ${WEBDAV_ENABLE} ]; then
