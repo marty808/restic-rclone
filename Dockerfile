@@ -12,8 +12,9 @@ FROM restic/restic:0.12.1
 COPY --from=rclone /usr/bin/tail /usr/bin/tail
 COPY --from=rclone /bin/rclone /bin/rclone
 
-RUN /bin/mkdir -p /mnt/restic /var/spool/cron/crontabs /var/log; \
-    /bin/touch /var/log/cron.log;
+RUN \
+    mkdir -p /mnt/restic /var/spool/cron/crontabs /var/log; \
+    touch /var/log/cron.log;
 
 ENV RESTIC_REPOSITORY=/mnt/restic
 ENV RESTIC_PASSWORD=""
