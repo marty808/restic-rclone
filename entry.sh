@@ -91,6 +91,7 @@ if [ $RESTIC_MODE == "CRON" ]; then
 
 elif [ $RESTIC_MODE == "RUN" ]; then
     echo "Run backup:"
+    touch /var/log/backup-last.log
     /bin/backup &
     tail -f --pid $! /var/log/backup-last.log
     exit 0   
